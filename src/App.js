@@ -8,7 +8,7 @@ import Projects from "./pages/Projects";
 import Security from "./pages/Security";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService";
-import AboutUs from "./pages/AboutUs";
+import AboutUs from "./pages/About";
 
 // Styled components for the toolbar and tabs
 const Toolbar = styled.div`
@@ -82,26 +82,24 @@ const App = () => {
   return (
     <Router>
       <div className="App">
+
         {/* Navigation Toolbar */}
         <Toolbar>
           <nav>
             <TabButton onClick={() => handleTabClick('home')} active={activeTab === 'home'}>
               <StyledLink to="/">Mapr</StyledLink>
             </TabButton>
-            <TabButton onClick={() => handleTabClick('projects')} active={activeTab === 'projects'}>
-              <StyledLink to="/projects">Projects</StyledLink>
-            </TabButton>
-            <TabButton onClick={() => handleTabClick('security')} active={activeTab === 'security'}>
-              <StyledLink to="/security">Security</StyledLink>
+            <TabButton onClick={() => handleTabClick('about')} active={activeTab === 'about-us'}>
+              <StyledLink to="/about">About</StyledLink>
             </TabButton>
             <TabButton onClick={() => handleTabClick('privacy-policy')} active={activeTab === 'privacy-policy'}>
               <StyledLink to="/privacy-policy">Privacy Policy</StyledLink>
             </TabButton>
+            <TabButton onClick={() => handleTabClick('security')} active={activeTab === 'security'}>
+              <StyledLink to="/security">Security</StyledLink>
+            </TabButton>
             <TabButton onClick={() => handleTabClick('terms-of-service')} active={activeTab === 'terms-of-service'}>
               <StyledLink to="/terms-of-service">Terms of Service</StyledLink>
-            </TabButton>
-            <TabButton onClick={() => handleTabClick('about-us')} active={activeTab === 'about-us'}>
-              <StyledLink to="/about-us">About Us</StyledLink>
             </TabButton>
           </nav>
         </Toolbar>
@@ -114,7 +112,7 @@ const App = () => {
             <Route path="/security" element={<Security />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/terms-of-service" element={<TermsOfService />} />
-            <Route path="/about-us" element={<AboutUs />} />
+            <Route path="/about" element={<AboutUs />} />
           </Routes>
         </AppContainer>
       </div>
