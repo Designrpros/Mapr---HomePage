@@ -1,17 +1,16 @@
-'use client'; // This component uses styled-components, so it needs to be a Client Component
+'use client'; 
 
 import React from "react";
 import styled from "styled-components";
-import Image from "next/image"; // Use Next.js Image
-import Link from 'next/link'; // Use Next.js Link
+import Image from "next/image";
+import Link from 'next/link'; 
 
 // Styled components for the About page
 const AboutContainer = styled.div`
   position: relative;
   padding: 60px 50px;
-  /* background: linear-gradient(135deg, #e3d3bc, #b0a883); */ /* Original background removed */
-  background-color: #ececec; /* Light mode background */
-  color: #333; /* Default text color for light mode */
+  background-color: #ececec;
+  color: #333;
   font-family: Arial, sans-serif;
   min-height: calc(100vh - 60px); 
   display: flex;
@@ -21,8 +20,8 @@ const AboutContainer = styled.div`
   text-align: center;
 
   @media (prefers-color-scheme: dark) {
-    background-color: #323232; /* Dark mode background */
-    color: #ececec; /* Default text color for dark mode */
+    background-color: #323232;
+    color: #ececec;
   }
 `;
 
@@ -31,7 +30,6 @@ const SectionTitle = styled.h1`
   font-weight: bold;
   margin-bottom: 20px;
   text-align: center;
-  /* Color will be inherited from AboutContainer */
 `;
 
 const SectionDescription = styled.p`
@@ -40,7 +38,6 @@ const SectionDescription = styled.p`
   text-align: center;
   max-width: 800px;
   margin: 0 auto 40px;
-  /* Color will be inherited from AboutContainer */
 `;
 
 const AboutContent = styled.div`
@@ -49,30 +46,29 @@ const AboutContent = styled.div`
   gap: 40px;
   align-items: center;
   text-align: center;
-  width: 100%; /* Ensure it takes up available width for centering children */
+  width: 100%;
 `;
 
 const AboutImage = styled(Image)`
   width: 200px;
   height: auto; 
   margin-top: 20px;
-  /* No specific dark mode changes needed for the image file itself */
 `;
 
 const TestimonialContainer = styled.div`
-  background-color: #fff; /* Light mode background */
-  color: #333; /* Text color for light mode within this section */
+  background-color: #fff;
+  color: #333;
   padding: 20px;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow for light mode */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   width: 80%;
   max-width: 700px;
-  margin: 20px auto; /* Added some vertical margin */
+  margin: 20px auto;
 
   @media (prefers-color-scheme: dark) {
-    background-color: #404040; /* Dark mode background for section */
-    color: #ececec; /* Text color for dark mode within this section */
-    box-shadow: 0 2px 4px rgba(255, 255, 255, 0.05); /* Subtle light shadow for dark mode */
+    background-color: #404040;
+    color: #ececec;
+    box-shadow: 0 2px 4px rgba(255, 255, 255, 0.05);
   }
 `;
 
@@ -81,7 +77,6 @@ const Testimonial = styled.p`
   line-height: 1.6;
   font-style: italic;
   text-align: center;
-  /* Color will be inherited from TestimonialContainer based on mode */
 `;
 
 const Author = styled.p`
@@ -89,31 +84,29 @@ const Author = styled.p`
   font-weight: bold;
   margin-top: 10px;
   text-align: center;
-  /* Color will be inherited from TestimonialContainer based on mode */
 `;
 
 const StyledLink = styled(Link)`
   text-decoration: none;
-  /* color: inherit; */ /* Overridden by specific color below for light mode */
   font-weight: bold;
   margin-top: 30px;
   display: inline-block;
   padding: 10px 20px;
-  background-color: #333; /* Default for light mode */
-  color: #fff; /* Default for light mode */
+  background-color: #333;
+  color: #fff;
   border-radius: 5px;
   transition: background-color 0.3s ease, color 0.3s ease;
   
   &:hover {
-    background-color: #555; /* Default for light mode */
+    background-color: #555;
   }
 
   @media (prefers-color-scheme: dark) {
-    background-color: #ececec; /* Light button for dark mode */
-    color: #323232; /* Dark text for dark mode */
+    background-color: #ececec;
+    color: #323232;
 
     &:hover {
-      background-color: #d0d0d0; /* Slightly darker hover for dark mode's light button */
+      background-color: #d0d0d0;
     }
   }
 `;
@@ -139,7 +132,8 @@ const About: React.FC = () => (
 
     <TestimonialContainer>
       <Testimonial>
-        "Clearly made by a tradesman! Convenient, easy to use, and continuously improving. It's free and doesn't get much better."
+        {/* FIX: Wrapped the text in curly braces to use quotes and apostrophes correctly */}
+        {"\"Clearly made by a tradesman! Convenient, easy to use, and continuously improving. It's free and doesn't get much better.\""}
       </Testimonial>
       <Author>- A Satisfied User</Author>
     </TestimonialContainer>

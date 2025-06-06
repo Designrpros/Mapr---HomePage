@@ -6,9 +6,8 @@ import styled from "styled-components";
 const PrivacyPolicyContainer = styled.div`
   position: relative;
   padding: 60px 50px;
-  /* background: linear-gradient(135deg, #e3d3bc, #b0a883); */ /* Original background removed */
-  background-color: #ececec; /* Light mode background */
-  color: #333; /* Default text color for light mode */
+  background-color: #ececec;
+  color: #333;
   font-family: Arial, sans-serif;
   min-height: calc(100vh - 60px); 
   display: flex;
@@ -18,8 +17,8 @@ const PrivacyPolicyContainer = styled.div`
   text-align: center;
 
   @media (prefers-color-scheme: dark) {
-    background-color: #323232; /* Dark mode background */
-    color: #ececec; /* Default text color for dark mode */
+    background-color: #323232;
+    color: #ececec;
   }
 `;
 
@@ -28,7 +27,6 @@ const SectionTitle = styled.h1`
   font-weight: bold;
   margin-bottom: 20px;
   text-align: center;
-  /* Color will be inherited from PrivacyPolicyContainer */
 `;
 
 const SectionDescription = styled.p`
@@ -37,7 +35,6 @@ const SectionDescription = styled.p`
   text-align: center;
   max-width: 800px;
   margin: 0 auto 40px;
-  /* Color will be inherited from PrivacyPolicyContainer */
 `;
 
 const AboutContent = styled.div`
@@ -46,23 +43,23 @@ const AboutContent = styled.div`
   gap: 40px;
   align-items: center;
   text-align: center;
-  width: 100%; /* Ensure it takes up available width for centering children */
+  width: 100%;
 `;
 
 const PolicySection = styled.div`
-  background-color: #fff; /* Light mode background */
-  color: #333; /* Text color for light mode within this section */
+  background-color: #fff;
+  color: #333;
   padding: 20px;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow for light mode */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   width: 80%;
   max-width: 700px;
   margin: 0 auto;
 
   @media (prefers-color-scheme: dark) {
-    background-color: #404040; /* Dark mode background for section */
-    color: #ececec; /* Text color for dark mode within this section */
-    box-shadow: 0 2px 4px rgba(255, 255, 255, 0.05); /* Subtle light shadow for dark mode */
+    background-color: #404040;
+    color: #ececec;
+    box-shadow: 0 2px 4px rgba(255, 255, 255, 0.05);
   }
 `;
 
@@ -70,14 +67,12 @@ const PolicyTitle = styled.h3`
   font-size: 24px;
   font-weight: bold;
   margin-bottom: 15px;
-  /* Color will be inherited from PolicySection based on mode */
 `;
 
 const PolicyText = styled.p`
   font-size: 18px;
   line-height: 1.6;
   margin-bottom: 20px;
-  /* Color will be inherited from PolicySection based on mode */
 `;
 
 const StyledLink = styled.a`
@@ -86,21 +81,21 @@ const StyledLink = styled.a`
   margin-top: 30px;
   display: inline-block;
   padding: 10px 20px;
-  background-color: #333; /* Default for light mode */
-  color: #fff; /* Default for light mode */
+  background-color: #333;
+  color: #fff;
   border-radius: 5px;
   transition: background-color 0.3s ease, color 0.3s ease;
   
   &:hover {
-    background-color: #555; /* Default for light mode */
+    background-color: #555;
   }
 
   @media (prefers-color-scheme: dark) {
-    background-color: #ececec; /* Light button for dark mode */
-    color: #323232; /* Dark text for dark mode */
+    background-color: #ececec;
+    color: #323232;
 
     &:hover {
-      background-color: #d0d0d0; /* Slightly darker hover for dark mode's light button */
+      background-color: #d0d0d0;
     }
   }
 `;
@@ -119,7 +114,8 @@ const PrivacyPolicy: React.FC = () => (
           We do not collect any personal data from our users. Mapr is designed to work locally, using CoreData and iCloud, meaning all your data is stored on your own device and synced through iCloud.
         </PolicyText>
         <PolicyText>
-          The only data we collect is anonymous analytics data that helps us understand how the app is being used. This data does not identify you personally and is only used for improving the app's functionality and performance.
+          {/* FIX: Replaced ' with &apos; */}
+          The only data we collect is anonymous analytics data that helps us understand how the app is being used. This data does not identify you personally and is only used for improving the app&apos;s functionality and performance.
         </PolicyText>
       </PolicySection>
 
@@ -139,14 +135,16 @@ const PrivacyPolicy: React.FC = () => (
           Mapr uses basic analytics to understand user behavior, improve app performance, and fix bugs. This data is anonymized and does not contain any personally identifiable information.
         </PolicyText>
         <PolicyText>
-          We use this data to improve user experience and optimize the app's functionality. You can opt out of this data collection through your device settings if you prefer.
+          {/* FIX: Replaced ' with &apos; */}
+          We use this data to improve user experience and optimize the app&apos;s functionality. You can opt out of this data collection through your device settings if you prefer.
         </PolicyText>
       </PolicySection>
 
       <PolicySection>
         <PolicyTitle>4. Data Security</PolicyTitle>
         <PolicyText>
-          We take your privacy seriously and implement security measures to protect your data. Since all data is stored locally on your device and synced via iCloud, the security of your data is primarily governed by Apple's security protocols and your personal iCloud settings.
+          {/* FIX: Replaced ' with &apos; */}
+          We take your privacy seriously and implement security measures to protect your data. Since all data is stored locally on your device and synced via iCloud, the security of your data is primarily governed by Apple&apos;s security protocols and your personal iCloud settings.
         </PolicyText>
       </PolicySection>
 

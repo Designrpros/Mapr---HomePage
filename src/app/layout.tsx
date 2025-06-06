@@ -10,8 +10,6 @@ export const metadata: Metadata = {
   description: "Project management tool for tradesmen",
 };
 
-
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -19,7 +17,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body style={{margin: 0}}>
+      {/* FIX: Applied the 'inter' font className to the body tag */}
+      <body className={inter.className} style={{margin: 0}}>
         <StyledComponentsRegistry>
           <Navbar /> {/* Render the Navbar */}
             {children}
