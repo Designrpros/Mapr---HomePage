@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import StyledComponentsRegistry from "./registry";
-import Navbar from "@/components/Navbar"; // Import the Navbar component
+import StyledComponentsRegistry from "../lib/registry"; // Corrected path
+import Navbar from "@/components/Navbar"; // Import the enhanced Navbar
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,11 +17,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      {/* FIX: Applied the 'inter' font className to the body tag */}
-      <body className={inter.className} style={{margin: 0}}>
+      <body className={inter.className} style={{ margin: 0 }}>
         <StyledComponentsRegistry>
-          <Navbar /> {/* Render the Navbar */}
-            {children}
+          <Navbar /> {/* Render Navbar on all pages */}
+          {children}
         </StyledComponentsRegistry>
       </body>
     </html>

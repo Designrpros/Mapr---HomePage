@@ -2,162 +2,122 @@
 
 import React from "react";
 import styled from "styled-components";
+import Link from 'next/link';
 
-const PrivacyPolicyContainer = styled.div`
-  position: relative;
-  padding: 60px 50px;
-  background-color: #ececec;
-  color: #333;
-  font-family: Arial, sans-serif;
-  min-height: calc(100vh - 60px); 
-  display: flex;
-  flex-direction: column;
-  justify-content: center; 
-  align-items: center; 
-  text-align: center;
-
-  @media (prefers-color-scheme: dark) {
-    background-color: #323232;
-    color: #ececec;
-  }
-`;
-
-const SectionTitle = styled.h1`
-  font-size: 60px;
-  font-weight: bold;
-  margin-bottom: 20px;
-  text-align: center;
-`;
-
-const SectionDescription = styled.p`
-  font-size: 20px;
-  line-height: 1.6;
-  text-align: center;
-  max-width: 800px;
-  margin: 0 auto 40px;
-`;
-
-const AboutContent = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 40px;
-  align-items: center;
-  text-align: center;
+// Consistent styles from your template
+const PolicyContainer = styled.div`
+  background: #fff;
+  padding: 8rem 2rem 4rem 2rem;
+  margin-top: 60px;
   width: 100%;
-`;
-
-const PolicySection = styled.div`
-  background-color: #fff;
-  color: #333;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  width: 80%;
-  max-width: 700px;
-  margin: 0 auto;
+  display: flex;
+  justify-content: center;
 
   @media (prefers-color-scheme: dark) {
-    background-color: #404040;
-    color: #ececec;
-    box-shadow: 0 2px 4px rgba(255, 255, 255, 0.05);
+    background: #1A202C;
   }
 `;
 
-const PolicyTitle = styled.h3`
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 15px;
-`;
+const ContentWrapper = styled.div`
+  max-width: 800px;
+  width: 100%;
+  line-height: 1.8;
+  font-size: 1.1rem;
+  color: #4A5568;
 
-const PolicyText = styled.p`
-  font-size: 18px;
-  line-height: 1.6;
-  margin-bottom: 20px;
-`;
+  @media (prefers-color-scheme: dark) {
+    color: #CBD5E0;
+  }
 
-const StyledLink = styled.a`
-  text-decoration: none;
-  font-weight: bold;
-  margin-top: 30px;
-  display: inline-block;
-  padding: 10px 20px;
-  background-color: #333;
-  color: #fff;
-  border-radius: 5px;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  h1 {
+    font-size: 3rem;
+    font-weight: 800;
+    color: #1A202C;
+    margin-bottom: 1rem;
+
+    @media (prefers-color-scheme: dark) {
+      color: #EDF2F7;
+    }
+  }
   
-  &:hover {
-    background-color: #555;
+  h2 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #1A202C;
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #E2E8F0;
+    padding-bottom: 0.5rem;
+
+    @media (prefers-color-scheme: dark) {
+      color: #E2E8F0;
+      border-bottom-color: #4A5568;
+    }
   }
 
-  @media (prefers-color-scheme: dark) {
-    background-color: #ececec;
-    color: #323232;
+  p {
+    margin-bottom: 1.5rem;
+  }
+  
+  a {
+    color: #2B6CB0;
+    text-decoration: none;
+    font-weight: 600;
+
+    @media (prefers-color-scheme: dark) {
+      color: #63B3ED;
+    }
 
     &:hover {
-      background-color: #d0d0d0;
+      text-decoration: underline;
     }
   }
 `;
 
-const PrivacyPolicy: React.FC = () => (
-  <PrivacyPolicyContainer>
-    <SectionTitle>Privacy Policy</SectionTitle>
-    <SectionDescription>
-      At Mapr, we value your privacy. This Privacy Policy explains how we collect, use, and protect your data when you use our app. Please read this policy carefully to understand how we handle your information.
-    </SectionDescription>
+const PrivacyPolicyPage: React.FC = () => (
+  <PolicyContainer>
+    <ContentWrapper>
+      <h1>Privacy Policy</h1>
+      <p><strong>Last Updated: October 16, 2025</strong></p>
+      <p>
+        At Mapr, we value your privacy. This Privacy Policy explains how we collect, use, and protect your data when you use our app. Please read this policy carefully to understand how we handle your information.
+      </p>
 
-    <AboutContent>
-      <PolicySection>
-        <PolicyTitle>1. Information We Collect</PolicyTitle>
-        <PolicyText>
-          We do not collect any personal data from our users. Mapr is designed to work locally, using CoreData and iCloud, meaning all your data is stored on your own device and synced through iCloud.
-        </PolicyText>
-        <PolicyText>
-          {/* FIX: Replaced ' with &apos; */}
-          The only data we collect is anonymous analytics data that helps us understand how the app is being used. This data does not identify you personally and is only used for improving the app&apos;s functionality and performance.
-        </PolicyText>
-      </PolicySection>
+      <h2>1. Information We Collect</h2>
+      <p>
+        We do not collect any personal data from our users. Mapr is designed to work locally, using CoreData and iCloud, meaning all your data is stored on your own device and synced through your personal iCloud account.
+      </p>
+      <p>
+        The only data we collect is anonymous analytics data that helps us understand how the app is being used. This data does not identify you personally and is only used for improving the app&apos;s functionality and performance.
+      </p>
 
-      <PolicySection>
-        <PolicyTitle>2. CoreData and iCloud</PolicyTitle>
-        <PolicyText>
-          Mapr utilizes CoreData for local data storage and iCloud for syncing across devices. All data stored on your device is private to you and is not accessible to us. We do not have access to the specific details of your data; it is solely managed by iCloud.
-        </PolicyText>
-        <PolicyText>
-          You can manage your iCloud settings through your device settings, where you can choose to disable iCloud syncing or delete your iCloud backups.
-        </PolicyText>
-      </PolicySection>
+      <h2>2. CoreData and iCloud</h2>
+      <p>
+        Mapr utilizes CoreData for local data storage and iCloud for syncing across devices. All data stored on your device is private to you and is not accessible to us. We do not have access to the specific details of your data; it is solely managed by Apple&apos;s iCloud service.
+      </p>
+      <p>
+        You can manage your iCloud settings through your device, where you can choose to disable iCloud syncing or manage your iCloud backups at any time.
+      </p>
 
-      <PolicySection>
-        <PolicyTitle>3. Analytics</PolicyTitle>
-        <PolicyText>
-          Mapr uses basic analytics to understand user behavior, improve app performance, and fix bugs. This data is anonymized and does not contain any personally identifiable information.
-        </PolicyText>
-        <PolicyText>
-          {/* FIX: Replaced ' with &apos; */}
-          We use this data to improve user experience and optimize the app&apos;s functionality. You can opt out of this data collection through your device settings if you prefer.
-        </PolicyText>
-      </PolicySection>
+      <h2>3. Analytics</h2>
+      <p>
+        Mapr uses basic, anonymized analytics to understand user behavior, improve app performance, and fix bugs. This data does not contain any personally identifiable information.
+      </p>
+      <p>
+        We use this data to improve the user experience and optimize the app&apos;s functionality. You can opt out of this data collection through your device settings if you prefer.
+      </p>
 
-      <PolicySection>
-        <PolicyTitle>4. Data Security</PolicyTitle>
-        <PolicyText>
-          {/* FIX: Replaced ' with &apos; */}
-          We take your privacy seriously and implement security measures to protect your data. Since all data is stored locally on your device and synced via iCloud, the security of your data is primarily governed by Apple&apos;s security protocols and your personal iCloud settings.
-        </PolicyText>
-      </PolicySection>
+      <h2>4. Data Security</h2>
+      <p>
+        We take your privacy seriously. Since all data is stored locally on your device and synced via iCloud, the security of your data is primarily governed by Apple&apos;s robust security protocols and your personal settings. For more details on how we leverage these protections, please see our <Link href="/security">Security page</Link>.
+      </p>
 
-      <PolicySection>
-        <PolicyTitle>5. Changes to This Privacy Policy</PolicyTitle>
-        <PolicyText>
-          We may update this Privacy Policy from time to time. Any changes will be posted on this page with an updated revision date. Please check this page periodically for any updates.
-        </PolicyText>
-      </PolicySection>
-    </AboutContent>
-
-    <StyledLink href="/">Back to Home</StyledLink>
-  </PrivacyPolicyContainer>
+      <h2>5. Changes to This Privacy Policy</h2>
+      <p>
+        We may update this Privacy Policy from time to time. Any changes will be posted on this page with an updated revision date. Please check this page periodically for any updates.
+      </p>
+    </ContentWrapper>
+  </PolicyContainer>
 );
 
-export default PrivacyPolicy;
+export default PrivacyPolicyPage;

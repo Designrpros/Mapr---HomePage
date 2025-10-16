@@ -1,119 +1,242 @@
-'use client'; // This component uses useState and useRouter, so it needs to be a Client Component
+'use client'; // This component uses client-side hooks (useState, usePathname, useEffect)
 
-import React from 'react';
-import styled from 'styled-components';
+import React, { useState, useEffect } from 'react';
+import styled, { createGlobalStyle } from 'styled-components';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-// Styled components for the toolbar and tabs
-const Toolbar = styled.div`
+// --- TYPE DEFINITIONS ---
+interface GlobalStyleProps {
+  $menuOpen: boolean;
+}
+
+interface NavLinksProps {
+  $menuOpen: boolean;
+  $hasMounted: boolean; // Prop to track client-side mount
+}
+
+interface MenuIconProps {
+  $menuOpen: boolean;
+}
+
+interface StyledLinkProps {
+  $active: boolean;
+}
+
+
+// --- STYLED COMPONENTS ---
+
+const GlobalStyle = createGlobalStyle<GlobalStyleProps>`
+  body {
+    overflow: ${({ $menuOpen }) => ($menuOpen ? 'hidden' : 'auto')};
+  }
+`;
+
+const Toolbar = styled.header`
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  padding: 1rem 1rem;
+  padding: 1rem 2rem;
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  background-color: rgba(0, 0, 0, 0); /* Fully transparent background */
-  color: black; /* Default text color for light mode */
+  box-sizing: border-box;
+  background-color: rgba(255, 255, 255, 1);
+  backdrop-filter: saturate(180%) blur(10px);
+  -webkit-backdrop-filter: saturate(180%) blur(10px);
+  color: #1a1a1a;
   z-index: 1000;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease, color 0.3s ease;
 
   @media (prefers-color-scheme: dark) {
-    color: #ececec; /* Text color for dark mode */
+    background-color: rgba(20, 20, 20, 0.7);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    color: #f0f0f0;
+  }
+`;
+
+// MODIFICATION: Added logic to disable transition on initial render
+const NavLinks = styled.nav<NavLinksProps>`
+  /* --- MOBILE STYLES (DEFAULT) --- */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  padding-top: 4rem;
+  background-color: #ffffff;
+  transform: ${({ $menuOpen }) => ($menuOpen ? 'translateY(0)' : 'translateY(-100%)')};
+  will-change: transform;
+  
+  /* THIS IS THE FIX: No transition on first render, then enable it */
+  transition: ${({ $hasMounted }) => $hasMounted ? 'transform 0.3s ease-in-out' : 'none'};
+
+  @media (prefers-color-scheme: dark) {
+    background-color: #121212;
   }
 
-  nav {
-    display: flex;
-    gap: 10px;
-    overflow-x: auto; /* Enable horizontal scrolling on small screens */
-    white-space: nowrap; /* Prevent items from wrapping to the next line */
+  /* --- DESKTOP STYLES (OVERRIDE) --- */
+  @media (min-width: 769px) {
+    position: static;
+    flex-direction: row;
+    width: auto;
+    height: auto;
+    background-color: transparent;
+    transform: translateY(0);
+    padding-top: 0;
+    gap: 0.5rem;
+    transition: none;
     
-    &::-webkit-scrollbar {
-      display: none; /* For Chrome, Safari, and Opera */
+    @media (prefers-color-scheme: dark) {
+      background-color: transparent;
     }
-    scrollbar-width: none; /* For Firefox */
-    -ms-overflow-style: none; /* For Internet Explorer and Edge */
   }
 `;
 
-interface TabButtonProps {
-  active: boolean;
-}
-
-const TabButton = styled.button<TabButtonProps>`
-  background-color: transparent;
-  border: none;
+const StyledLink = styled(Link)<StyledLinkProps>`
+  text-decoration: none;
+  color: inherit;
+  font-size: 1.5rem;
+  font-weight: 500;
   padding: 0.5rem 1rem;
-  font-size: 1rem;
+  border-radius: 999px;
+  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
   cursor: pointer;
-  color: #333; /* Default text color for light mode */
-  /* Adjusted active border to use a consistent color token if available, here #333 for example */
-  border-bottom: ${({ active }) => (active ? '2px solid #333' : '2px solid transparent')}; 
-  font-weight: bold;
-  text-transform: uppercase;
-  padding-right: 2rem; /* This was present, keeping it */
-  transition: color 0.2s ease-in-out, border-bottom-color 0.2s ease-in-out;
 
+  background-color: ${({ $active }) => ($active ? 'rgba(0, 0, 0, 0.05)' : 'transparent')};
 
   &:hover {
-    color: #000; /* Darker text color on hover for light mode */
-    border-bottom: 2px solid #000; /* Darker border on hover for light mode */
+    background-color: rgba(0, 0, 0, 0.1);
   }
 
   @media (prefers-color-scheme: dark) {
-    color: #ececec; /* Text color for dark mode */
-    border-bottom: ${({ active }) => (active ? '2px solid #ececec' : '2px solid transparent')}; /* Active border for dark mode */
-
+    background-color: ${({ $active }) => ($active ? 'rgba(255, 255, 255, 0.1)' : 'transparent')};
     &:hover {
-      color: #fff; /* Brighter text color on hover for dark mode */
-      border-bottom: 2px solid #fff; /* Brighter border on hover for dark mode */
+      background-color: rgba(255, 255, 255, 0.15);
     }
   }
-`;
 
-const StyledLink = styled(Link)`
-  text-decoration: none;
-  color: inherit; /* Inherits color from TabButton */
-  z-index: 2; /* This was present, keeping it */
-  &:hover {
-    text-decoration: none;
+  @media (min-width: 769px) {
+    font-size: 0.9rem;
   }
 `;
+
+const LogoLink = styled(Link)`
+  text-decoration: none;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: inherit;
+  z-index: 1001;
+  cursor: pointer;
+`;
+
+const MenuIcon = styled.button<MenuIconProps>`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 1.5rem;
+  height: 1.5rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 1001;
+
+  div {
+    width: 1.5rem;
+    height: 2px;
+    background-color: currentColor;
+    border-radius: 10px;
+    transition: all 0.3s linear;
+    position: relative;
+    transform-origin: 1px;
+
+    :first-child { transform: ${({ $menuOpen }) => ($menuOpen ? 'rotate(45deg)' : 'rotate(0)')}; }
+    :nth-child(2) { opacity: ${({ $menuOpen }) => ($menuOpen ? '0' : '1')}; transform: ${({ $menuOpen }) => ($menuOpen ? 'translateX(20px)' : 'translateX(0)')}; }
+    :nth-child(3) { transform: ${({ $menuOpen }) => ($menuOpen ? 'rotate(-45deg)' : 'rotate(0)')}; }
+  }
+  
+  @media (min-width: 769px) {
+    display: none;
+  }
+`;
+
+
+// --- NAVBAR COMPONENT ---
 
 const Navbar: React.FC = () => {
   const pathname = usePathname();
+  const [menuOpen, setMenuOpen] = useState(false);
+  
+  // MODIFICATION: State to safely handle client-side rendering
+  const [hasMounted, setHasMounted] = useState(false);
+
+  useEffect(() => {
+    setHasMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (menuOpen) {
+      setMenuOpen(false);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pathname]);
+  
+  const navItems = [
+    { href: "/about", label: "About" },
+    { href: "/privacy-policy", label: "Privacy Policy" },
+    { href: "/security", label: "Security" },
+    { href: "/terms-of-service", label: "Terms of Service" },
+  ];
+
+  const handleLinkClick = () => {
+    setMenuOpen(false);
+  };
+
+  // Prevent flash by not rendering menu until mounted
+  if (!hasMounted) {
+    // Render a simplified version for SSR and initial hydration
+    return (
+      <Toolbar>
+        <LogoLink href="/">Mapr</LogoLink>
+      </Toolbar>
+    );
+  }
 
   return (
-    <Toolbar>
-      <nav>
-        <StyledLink href="/">
-          <TabButton active={pathname === '/'}>
-            Mapr
-          </TabButton>
-        </StyledLink>
-        <StyledLink href="/about">
-          <TabButton active={pathname === '/about'}>
-            About
-          </TabButton>
-        </StyledLink>
-        <StyledLink href="/privacy-policy">
-          <TabButton active={pathname === '/privacy-policy'}>
-            Privacy Policy
-          </TabButton>
-        </StyledLink>
-        <StyledLink href="/security">
-          <TabButton active={pathname === '/security'}>
-            Security
-          </TabButton>
-        </StyledLink>
-        <StyledLink href="/terms-of-service">
-          <TabButton active={pathname === '/terms-of-service'}>
-            Terms of Service
-          </TabButton>
-        </StyledLink>
-      </nav>
-    </Toolbar>
+    <>
+      <GlobalStyle $menuOpen={menuOpen} />
+      <Toolbar>
+        <LogoLink href="/" onClick={handleLinkClick}>Mapr</LogoLink>
+
+        {/* MODIFICATION: Pass hasMounted state to NavLinks */}
+        <NavLinks $menuOpen={menuOpen} $hasMounted={hasMounted}>
+          {navItems.map((item) => (
+            <StyledLink 
+              key={item.href} 
+              href={item.href} 
+              $active={pathname === item.href}
+              onClick={handleLinkClick}
+            >
+              {item.label}
+            </StyledLink>
+          ))}
+        </NavLinks>
+
+        <MenuIcon $menuOpen={menuOpen} onClick={() => setMenuOpen(!menuOpen)} aria-label="Toggle menu">
+          <div />
+          <div />
+          <div />
+        </MenuIcon>
+      </Toolbar>
+    </>
   );
 };
 
